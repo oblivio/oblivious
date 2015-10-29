@@ -652,7 +652,7 @@ private function _processDirContents($dircontents){
 		}
 		return $data;
 	}
-	public function listEntries($category=''){
+	public function listEntries($category='',$meta=array()){
 		$dir = dirname(__FILE__).'/../data';
 		$dircontents = $this->_getDirContents($dir);
 		$processed = array();
@@ -663,7 +663,22 @@ private function _processDirContents($dircontents){
 			for($i=0; $i<count($processed['Entries']); $i++){
 				$currEntry = $processed['Entries'][$i];
 				if($currEntry['category'] == $category){
+					
 					$tmp[] = $currEntry;
+				}
+			}
+			$processed['Entries'] = $tmp;
+		}
+		if(count($meta) > 0){
+			$tmp = array();
+			for($i=0; $i<count($processed['Entries']); $i++){
+				$currEntry = $processed['Entries'][$i];
+				
+				foreach($meta as $k=>$v){
+					$meta = json_decode(json_encode($currEntry['meta']), true);
+					if(ISSET($meta[$k]) && $meta[$k] == $v){
+						$tmp[] = $currEntry;
+					}
 				}
 			}
 			$processed['Entries'] = $tmp;

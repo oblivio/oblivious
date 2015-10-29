@@ -113,6 +113,17 @@ $app->get('/api/list/entries/',function() use ($app,$oblivious){
 	
 });
 
+$app->post('/api/list/entries/meta/',function() use ($app,$oblivious){
+	if(ISSET($_POST['metadata'])){
+		$meta = json_decode($_POST['metadata'],true);
+		if(count($meta) > 0){
+			echo json_encode( $oblivious->listEntries('', $meta )); //json_encode
+		}
+	}else{
+		echo json_encode( array('Error'=>'No metadata passed.') );		
+	}
+});
+
 $app->get('/api/list/entries/:category/',function($category) use ($app,$oblivious){
 
 	echo json_encode( $oblivious->listEntries($category) ); //json_encode
