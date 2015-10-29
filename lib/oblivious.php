@@ -670,13 +670,13 @@ private function _processDirContents($dircontents){
 			$processed['Entries'] = $tmp;
 		}
 		if(count($meta) > 0){
+			
 			$tmp = array();
 			for($i=0; $i<count($processed['Entries']); $i++){
 				$currEntry = $processed['Entries'][$i];
-				
 				foreach($meta as $k=>$v){
-					$meta = json_decode(json_encode($currEntry['meta']), true);
-					if(ISSET($meta[$k]) && $meta[$k] == $v){
+					$currmeta = json_decode(json_encode($currEntry['meta']), true);
+					if(ISSET($currmeta[$k]) && $currmeta[$k] == $meta[$k]){
 						$tmp[] = $currEntry;
 					}
 				}

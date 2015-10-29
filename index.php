@@ -112,7 +112,16 @@ $app->get('/api/list/entries/',function() use ($app,$oblivious){
 	echo json_encode( $oblivious->listEntries() ); //json_encode
 	
 });
-
+$app->post('/api/list/entries/:category/meta/',function($category) use ($app,$oblivious){
+	if(ISSET($_POST['metadata'])){
+		$meta = json_decode($_POST['metadata'],true);
+		if(count($meta) > 0){
+			echo json_encode( $oblivious->listEntries($category, $meta )); //json_encode
+		}
+	}else{
+		echo json_encode( array('Error'=>'No metadata passed.') );		
+	}
+});
 $app->post('/api/list/entries/meta/',function() use ($app,$oblivious){
 	if(ISSET($_POST['metadata'])){
 		$meta = json_decode($_POST['metadata'],true);
@@ -120,7 +129,7 @@ $app->post('/api/list/entries/meta/',function() use ($app,$oblivious){
 			echo json_encode( $oblivious->listEntries('', $meta )); //json_encode
 		}
 	}else{
-		echo json_encode( array('Error'=>'No metadata passed.') );		
+		echo json_encode( array('Error'=>'No metadata passed.') );
 	}
 });
 
