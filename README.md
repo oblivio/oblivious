@@ -11,7 +11,7 @@ While the purpose of Haze is end-to-end encrypted communication (client-to-clien
 
 Oblivious also provides a mechanism to 'invite' users into entries, allows users to comment on entries, add images to content or comments, password protect specific content, and even specify expiration times. This feature-set is sure to expand in the future.
 
-Oblivious includes a default front-end, to show how the system could be used to provide end-to-end encryption to its users. The default front-end is basically a different theme for the Haze front-end - and encapsulates a lot of the magic into easy to use javascript API. Here is a live demo of oblivious: http://www.fabian-valle.com/oblivious/
+Oblivious includes a default front-end, to show how the system could be used to provide end-to-end encryption to its users. The default front-end is basically a different theme for the Haze front-end - and encapsulates a lot of the magic into easy to use javascript API. Here is a live demo of oblivious: http://www.fabian-valle.com/code/oblivious/
 
 The oblivious system is built on the Slim framework - a microframework for PHP.
 
