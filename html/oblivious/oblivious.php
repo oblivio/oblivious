@@ -113,7 +113,8 @@
 							<input id="invite-pwd" type="text" placeholder="(Required)" class="full-width" />
 					      <input type="text" class="full-width" readonly="readonly" id="encodedinvite" placeholder="encodedinvite" />
 					      <button id="send-invite-button" class="btn--green full-width">Generate Invite</button>
-					      
+					      <hr />
+					      <a id="invite-image" href="" download="invite.png"><img src="" /></a>
 		  </div>
 		  <button data-remodal-action="cancel" class="remodal-cancel full-width">Close</button>
 		</div>

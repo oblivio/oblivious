@@ -11,7 +11,7 @@
                 	<form id="inviteform" action="#" role="form" class="my2">
                 		<label for="inviteinput">Enter Invite</label>
                 		<input type="text" id="encodedinvite" class="full-width" />
-<!--                 		<input id="inviteinput" type=file accept="image/*;capture=camera">				      	 -->
+                		<input id="decode-input" type=file accept="image/*;capture=camera">				      	
                 		<input id="submit-invite-button" value="Submit Invite" class="btn--blue full-width" type="button">
                 	</form>
                 	

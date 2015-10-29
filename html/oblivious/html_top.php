@@ -18,6 +18,8 @@
         <script src="<?php echo $path_from_index;?>js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
         <script src="<?php echo $path_from_index;?>js/vendor/load-image.all.min.js"></script>
         <script src="<?php echo $path_from_index;?>js/vendor/sjcl.js?#"></script>
+        <script src="<?php echo $path_from_index;?>js/ghostpixels/vendor/rsvp.min.js?#"></script>
+        <script src="<?php echo $path_from_index;?>js/ghostpixels/ghostpixels.js?#"></script>
 		<script src="<?php echo $path_from_index;?>js/vendor/base64.js?#"></script>
 		<script src="<?php echo $path_from_index;?>js/vendor/rawdeflate.js?#"></script>
 		<script src="<?php echo $path_from_index;?>js/vendor/rawinflate.js?#"></script>      

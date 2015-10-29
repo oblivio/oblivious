@@ -58,7 +58,28 @@ $( document ).ready(function() {
 		var imgData = String(this);
 		oblivious_viewdata.newentry.imgdata = imgData;
 	});
-	//oblivious.invite_onchange('inviteinput');
+	document.getElementById('decode-input').onchange = function(input) {
+		var file    = document.getElementById('decode-input').files[0];
+		if ( file ) {
+	        var FR= new FileReader();
+	        FR.onload = function(e) {
+	        	var password = prompt('Enter password (leave empty if none)');
+	        	
+				GhostPixels.decode(password,e.target.result).then(function(decodedMessage){
+					
+					$("#encodedinvite").val(decodedMessage);
+					$("#encodedinvite").show();
+					
+	        	});
+	        	
+	        };       
+	        FR.readAsDataURL( file );
+	    }
+	};
+	$("#submit-invite-button").on("click",function(){
+		oblivious._processInvite('#invite-status');
+			$("#inviteform")[0].reset();
+	});
 	$("#metadata_entry").on("change",function(){
 		var tmpJSON = $(this).val();
 		try{
@@ -70,10 +91,7 @@ $( document ).ready(function() {
 		}
 		
 	});
-	$("#submit-invite-button").on("click",function(){
-			oblivious._processInvite('#invite-status');
-			$("#inviteform")[0].reset();
-	});
+	
 	$("#submit-entry-button").on("click",function(){
 		$.blockUI({ 
 			onBlock:function(){

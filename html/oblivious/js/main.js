@@ -710,9 +710,9 @@ var oblivious = (function () {
 		             containsimage:0,
 		             isinvite:1
 			     };
-			
+			var tmpPwd = '';
 			if($("#invite-pwd").val() != ''){
-				var tmpPwd = $("#invite-pwd").val();
+				tmpPwd = $("#invite-pwd").val();
 				encodedString = "#!k!#"+oblivious._encrypt(tmpPwd,encodedString);
 				//avoids sending the unencrypted key
 				d.krypi=1;
@@ -733,6 +733,11 @@ var oblivious = (function () {
 					console.log('encodedinvite',encodedInvite);
 
 				$("#encodedinvite").val(encodedInvite);
+				$("#encodedinvite").show();
+				var imgSRC = GhostPixels.encode(encodedInvite,tmpPwd);
+				$("#invite-image").attr('href',imgSRC);
+				$("#invite-image>img").attr('src',imgSRC);
+				$("#invite-image>img").show();
 			});
 			
 		}else if(entryCategory){
@@ -770,6 +775,12 @@ var oblivious = (function () {
 				console.log('encodedinvite',encodedInvite);
 //				
 				$("#encodedinvite").val(encodedInvite);
+				$("#encodedinvite").show();
+				var imgSRC = GhostPixels.encode(encodedInvite,tmpPwd);
+				
+				$("#invite-image").attr('href',imgSRC);
+				$("#invite-image>img").attr('src',imgSRC);
+				$("#invite-image>img").show();
 			});
 		}
 	}
