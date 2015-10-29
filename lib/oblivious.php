@@ -382,18 +382,7 @@ private function _createCategory($category){
 		
 		$raw_text=$this->_decrypt($raw_text,$this->crypto_key[$category]);
 		$paste=json_decode($raw_text);
-		if($admin){
-			$messages = array($paste); // The paste itself is the first in the list of encrypted messages.
-			unset($messages['data']);
-						
-			return $messages;
-		}
-		// See if paste has expired.
-		if (isset($paste->meta->expire_date) && $paste->meta->expire_date<time())
-		{
-			$this->_deleteEntry($pasteid,$category);  // Delete the paste
-			return array('','Paste does not exist, has expired or has been deleted.','');
-		}
+		
 		
 		
 		// We kindly provide the remaining time before expiration (in seconds)
@@ -432,6 +421,22 @@ private function _createCategory($category){
 		//$this->CIPHERDATA = htmlspecialchars($this->CIPHERDATA,ENT_NOQUOTES);
 		// If the paste was meant to be read only once, delete it.
 		if (property_exists($paste->meta, 'burnafterreading') && $paste->meta->burnafterreading) $this->_deleteEntry($pasteid,$category);
+		
+		
+		if($admin){
+			$commentcount = count($messages);
+			$messages = array($paste); // The paste itself is the first in the list of encrypted messages.
+			unset($messages['data']);
+			$messages['commentcount'] = $commentcount;
+			return $messages;
+		}
+		// See if paste has expired.
+		if (isset($paste->meta->expire_date) && $paste->meta->expire_date<time())
+		{
+			$this->_deleteEntry($pasteid,$category);  // Delete the paste
+			return array('','Paste does not exist, has expired or has been deleted.','');
+		}
+		
 		
 		return $messages;
 	}
@@ -633,6 +638,7 @@ private function _processDirContents($dircontents){
 			$e = $this->getEntry($id, $cat,true);
 			if($e){
 				$tmp['meta'] = $e[0]->meta;
+				$tmp['contents'] = $e['commentcount'];
 				$data[] = $tmp;
 			}
 		}
