@@ -423,6 +423,13 @@ private function _createCategory($category){
 		if (property_exists($paste->meta, 'burnafterreading') && $paste->meta->burnafterreading) $this->_deleteEntry($pasteid,$category);
 		
 		
+		
+		// See if paste has expired.
+		if (isset($paste->meta->expire_date) && $paste->meta->expire_date<time())
+		{
+			$this->_deleteEntry($pasteid,$category);  // Delete the paste
+			return array('','Paste does not exist, has expired or has been deleted.','');
+		}
 		if($admin){
 			$commentcount = count($messages);
 			$messages = array($paste); // The paste itself is the first in the list of encrypted messages.
@@ -430,13 +437,6 @@ private function _createCategory($category){
 			$messages['commentcount'] = $commentcount;
 			return $messages;
 		}
-		// See if paste has expired.
-		if (isset($paste->meta->expire_date) && $paste->meta->expire_date<time())
-		{
-			$this->_deleteEntry($pasteid,$category);  // Delete the paste
-			return array('','Paste does not exist, has expired or has been deleted.','');
-		}
-		
 		
 		return $messages;
 	}
@@ -658,7 +658,7 @@ private function _processDirContents($dircontents){
 		}
 		return $data;
 	}
-	public function listEntries($category='',$meta=array()){
+public function listEntries($category='',$meta=array()){
 		$dir = dirname(__FILE__).'/../data';
 		$dircontents = $this->_getDirContents($dir);
 		$processed = array();
@@ -690,5 +690,40 @@ private function _processDirContents($dircontents){
 			$processed['Entries'] = $tmp;
 		}
 		return $processed;
+	}
+	public function blackbook($blackbook_data){
+		
+		$dir = dirname(__FILE__).'/../data';
+		$dircontents = $this->_getDirContents($dir);
+		$processed = array();
+		$processed['Entries'] = $this->_processDirContents($dircontents);
+		$processed['Blackbook'] = array();
+		foreach($blackbook_data as $entryid=>$entrydata){
+			$category = $entrydata['category'];
+			$oldcount = $entrydata['commentcount'];
+			
+			if($category != ''){
+				$tmp = array();
+				for($i=0; $i<count($processed['Entries']); $i++){
+					$currEntry = $processed['Entries'][$i];
+					if($currEntry['category'] == $category && $currEntry['entryid'] == $entryid){
+						$newcount = $currEntry['contents'];
+						
+						$hasChanged = false;
+						if($newcount != $oldcount)
+							$hasChanged = true;
+						
+						$tmp[] = array(
+								'entryid'=>$entryid,
+								'category'=>$category,
+								'commentcount'=>$newcount,
+								'changed'=>$hasChanged
+						);
+					}
+				}
+				$processed['Blackbook'][] = $tmp;
+			}
+		}
+		return $processed['Blackbook'];
 	}
 }

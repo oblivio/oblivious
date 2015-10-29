@@ -112,6 +112,13 @@ $app->get('/api/list/entries/',function() use ($app,$oblivious){
 	echo json_encode( $oblivious->listEntries() ); //json_encode
 	
 });
+$app->post('/api/blackbook/',function() use ($app,$oblivious){
+	//$blackbookdata = array('bc1af1962b4f9ae7'=>array('category'=>'beta','commentcount'=>1),'377089e832c66dd6'=>array('category'=>'beta','commentcount'=>5)) ;
+	if(ISSET($_POST['blackbookdata'])){
+		$blackbookdata = json_decode($_POST['blackbookdata'],true);
+	}
+	echo json_encode( $oblivious->blackbook($blackbookdata) );
+});
 $app->post('/api/list/entries/:category/meta/',function($category) use ($app,$oblivious){
 	if(ISSET($_POST['metadata'])){
 		$meta = json_decode($_POST['metadata'],true);
