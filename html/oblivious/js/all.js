@@ -156,6 +156,7 @@ $( document ).ready(function() {
 			entries:[],
 			freshload:true,
 			showinvite:false,
+			hasChanged:[],
 			categories:[],
 			subnav:{
 				'categories':true,	
@@ -183,7 +184,8 @@ $( document ).ready(function() {
 		'entries':[],
 		'category':'',
 		'contents':[],
-		'_entryid':''
+		'_entryid':'',
+		'password':''
 	};
 	
 	rivets.bind($('#oblivious_entrylist'), {
@@ -208,12 +210,18 @@ $( document ).ready(function() {
 		$("#oblivious_entrylist").fadeOut();
 		$("#oblivious_viewentry").fadeIn();
 		//oblivious_viewentry_data
+		oblivious_viewentry_data.password = '';
+		oblivious_viewentry_data.category = '';
+		oblivious_viewentry_data.entries = [];
+		oblivious_viewentry_data._entryid = '';
 		
 		$.each(oblivious_data.entries,function(i,entry){
 			if(entry.entryid == entryID){
 				oblivious_viewentry_data.category = entry.category;
 				oblivious_viewentry_data.entries = [entry];
 				oblivious_viewentry_data._entryid = entry.entryid;
+				
+				$("#"+entry.entryid).parent("."+entry.category).parent().removeClass('has-changed');
 				
 				$("#view-entry-meta").val( JSON.stringify(entry.meta,null,2) )
 				$.blockUI({ onBlock:function(){
@@ -225,6 +233,7 @@ $( document ).ready(function() {
 							if(pwd){
 								var eContents = oblivious._processGetEntry(data,entry.entryid,pwd);
 								oblivious_viewentry_data.contents = eContents;
+								oblivious_viewentry_data.password = pwd;
 							}else{
 								
 								$("#return-to-entries").click();
@@ -234,6 +243,7 @@ $( document ).ready(function() {
 					    	oblivious_viewentry_data.contents = eContents;
 					    	console.log(oblivious_viewentry_data.contents);
 					    }
+						
 						$.unblockUI();
 					});
 				} });
@@ -254,18 +264,31 @@ $('body').on('click','#loadblackbook-button',function(){
 				'entryid':'',
 				'meta':''
 		};
-		tmpEntry.entryid = obj.key;
-		tmpEntry.category = obj.value.category;
-		tmpEntry.meta = obj.value;
-		Entries.push(tmpEntry);
+		if(obj.value != ''){
+			tmpEntry.entryid = obj.key;
+			tmpEntry.category = obj.value.category;
+			tmpEntry.meta = obj.value;
+			Entries.push(tmpEntry);
+		}
 	});
 	oblivious_data.entries = Entries;
 	oblivious_data.subnav.active = 'Blackbook';
 	oblivious_data.freshload = false;
 	oblivious_data.showinvite = true;
+	
+	$('.listed-entry').removeClass('has-changed');
+	$.each(oblivious_data.hasChanged,function(i,tmpObj){
+		
+		$("#"+tmpObj.entryid).parent('.'+tmpObj.category).parent('.listed-entry').addClass('has-changed');
+		//where do I remove this???
+	});
 })
 $('body').on('click','#return-to-entries',function(){
-		
+	oblivious_viewentry_data.password = '';
+	blivious_viewentry_data.category = '';
+	oblivious_viewentry_data.entries = [];
+	oblivious_viewentry_data._entryid = '';
+	
 		$("#oblivious_entrylist").show();
 		$("#oblivious_viewentry").hide();
 	});
@@ -372,4 +395,99 @@ $('body').on('click','#send-invite-button',function(){
 			
 		});
 	});
+	
+	//blackbook check
+	var bbcheck = function(){
+		var Entries =[];
+		var localMeta = oblivious.blackbookGet('meta');
+		var localCommCount = oblivious.blackbookGet('commentcount');
+		$.each(localMeta,function(i,obj){
+			var tmpEntry = {
+					'category':'',
+					'entryid':'',
+					'commentcount':'',
+			};
+			tmpEntry.entryid = obj.key;
+			tmpEntry.category = obj.value.category;
+			
+			$.each(localCommCount,function(j,cObj){
+				if(cObj.key === obj.key){
+					tmpEntry.commentcount = cObj.value;
+					return false;
+				}
+			});
+			if(typeof tmpEntry.category != 'undefined' && tmpEntry.entryid != 'undefined' && tmpEntry.commentcount != ''){
+				Entries.push(tmpEntry);
+			}
+		});
+		if(Entries.length == 0)
+			return false;
+		
+		$.post( "api/blackbook/", {blackbookdata:Entries})
+		  .done(function( data ) {
+		    oblivious_data.hasChanged = [];
+		    	data = JSON.parse(data);
+		    	var currEntries = [];
+			    $.each(data,function(i,obj){
+			    		//obj[0] is the entry
+			    	if(obj.length == 0)
+			    		return false;
+			    	
+			    		if(obj[0].changed){
+			    			var tmp = {
+			    					'entryid':obj[0].entryid,
+			    					'category':obj[0].category
+			    			};
+			    			oblivious_data.hasChanged.push(tmp);
+			    		}
+			    		console.log('change!',obj[0].entryid);
+			    		currEntries.push(obj[0]);
+			    });
+			    
+			    //delete obsolete entries from BB
+			    var localMeta = oblivious.blackbookGet('meta');
+			    var newMeta = [];
+				$.each(localMeta,function(i,obj){
+					var stillExists = currEntries.filter( function(item){return (item.category==obj.value.category && item.entryid==obj.key);} );
+					
+					if(stillExists.length == 0){
+						oblivious.blackbookSet('meta',obj.key,'');
+						oblivious.blackbookSet('entries',obj.key,'');
+						oblivious.blackbookSet('keys',obj.key,'');
+						oblivious.blackbookSet('categories',obj.key,'');
+						oblivious.blackbookSet('tokens',obj.key,'');
+						oblivious.blackbookSet('commentcount',obj.key,-1);
+					}
+				});
+				
+				//if @ blackbook
+				if(oblivious_data.subnav.active == 'Blackbook' && oblivious_viewentry_data.entryid == ''){
+					$('#loadblackbook-button').click();
+				}else if(oblivious_viewentry_data._entryid != ''){
+					oblivious.getEntry(oblivious_viewentry_data._entryid,oblivious_viewentry_data.category,function(){
+						console.log('this @ getEntry',this);
+						var data = this;
+						if(data[0].meta.krypi == "1"){
+							var pwd = oblivious_viewentry_data.password;
+							if(pwd){
+								var eContents = oblivious._processGetEntry(data,oblivious_viewentry_data._entryid,pwd);
+								oblivious_viewentry_data.contents = eContents;
+								window.scrollTo(0,$('#oblivious_viewentry')[0].scrollHeight);
+							}else{
+								
+								$("#return-to-entries").click();
+							}
+					    }else{
+					    	var eContents = oblivious._processGetEntry(data,oblivious_viewentry_data._entryid,'');
+					    	oblivious_viewentry_data.contents = eContents;
+					    	window.scrollTo(0,$('#oblivious_viewentry')[0].scrollHeight - 100);
+					    }
+						
+					});
+				}
+				
+		  }, "json");
+	};
+	bbcheck();
+	window.setInterval(bbcheck,30000); //check every 30s
 });

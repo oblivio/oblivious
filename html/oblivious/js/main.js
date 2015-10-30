@@ -2,7 +2,7 @@ sjcl.random.startCollectors();
 
 var oblivious = (function () {
 	var blackbook = function(){
-		this.data_types = ['aliases','contacts','categories','entries','keys','tokens','meta'];
+		this.data_types = ['commentcount','aliases','contacts','categories','entries','keys','tokens','meta'];
 	};
 	
 	blackbook.prototype.set = function(data_type,newKey,newValue){
@@ -328,6 +328,7 @@ var oblivious = (function () {
 		    	blackbookSet('categories',data.id,data.category)
 		    	blackbookSet('tokens',data.id,data.deletetoken);
 		    	blackbookSet('meta',data.id,entrydata);
+		    	blackbookSet('commentcount',data.id,1);
 		    }
 		    else if(entrydata.isinvite){
 		    	
@@ -337,6 +338,7 @@ var oblivious = (function () {
 		    	blackbookSet('categories',data.id,data.category)
 		    	blackbookSet('tokens',data.id,data.deletetoken);
 		    	blackbookSet('meta',data.id,entrydata);
+		    	blackbookSet('commentcount',data.id,1);
 		    }
 		    if(typeof cb !== 'undefined' && typeof cb === 'function')
 		    	cb.call(data);
@@ -852,6 +854,9 @@ var oblivious = (function () {
 						    	blackbookSet('keys',entryID,entryKey);
 						    	blackbookSet('categories',entryID,entryCategory);
 						    	blackbookSet('meta',entryID,this[0].meta);
+						    	//blackbookSet commentcount here
+						    	//and @ create when populating blackbook
+						    	//clicking view from public does not add to bb
 							}
 						});
 				    	//blackbookSet('tokens',data.id,data.deletetoken);

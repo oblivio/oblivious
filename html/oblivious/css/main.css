@@ -1,6 +1,9 @@
 .half-width{
 	width:50%;
 }
+.has-changed{
+	border:0.5em solid red !important;
+}
 .listed-entry{
 	background-color:white;
 	background:white;
@@ -287,7 +290,7 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #e44d26;
+    border-bottom: 20px solid black;
 }
 .main-container{
 	font-family: 'Titillium Web', sans-serif;
@@ -298,7 +301,8 @@ body {
 	font-style:italic;
 	float:right;
 	font-size:0.6em;
-	text-align:right;
+	text-align:left;
+	padding-bottom:5rem;
 }
 .footer-container a:link{
 	text-decoration: none;
@@ -311,7 +315,7 @@ body {
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 20px solid black;
 }
 
 .header-container,
@@ -360,15 +364,15 @@ nav a {
     margin-bottom: 10px;
     padding:0;
 	width:25%;
-	border-right:2px solid white;
 	float:left;
 	margin-top:1em;
     text-align: center;
     text-decoration: none;
     font-weight: bold;
-    color: white;
-    background: #e44d26;
+    color: black;
+    background: white;
     opacity:0.8;
+    border:1px solid black;
 }
 nav a>img{
 	max-height:3em;

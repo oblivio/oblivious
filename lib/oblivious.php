@@ -698,7 +698,8 @@ public function listEntries($category='',$meta=array()){
 		$processed = array();
 		$processed['Entries'] = $this->_processDirContents($dircontents);
 		$processed['Blackbook'] = array();
-		foreach($blackbook_data as $entryid=>$entrydata){
+		foreach($blackbook_data as $i=>$entrydata){
+			$entryid = $entrydata['entryid'];
 			$category = $entrydata['category'];
 			$oldcount = $entrydata['commentcount'];
 			

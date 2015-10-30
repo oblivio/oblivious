@@ -113,9 +113,9 @@ $app->get('/api/list/entries/',function() use ($app,$oblivious){
 	
 });
 $app->post('/api/blackbook/',function() use ($app,$oblivious){
-	//$blackbookdata = array('bc1af1962b4f9ae7'=>array('category'=>'beta','commentcount'=>1),'377089e832c66dd6'=>array('category'=>'beta','commentcount'=>5)) ;
+	//$blackbookdata = array(array('entryid'=>'', 'category'=>'beta','commentcount'=>1),'377089e832c66dd6'=>array('category'=>'beta','commentcount'=>5)) ;
 	if(ISSET($_POST['blackbookdata'])){
-		$blackbookdata = json_decode($_POST['blackbookdata'],true);
+		$blackbookdata = $_POST['blackbookdata'];
 	}
 	echo json_encode( $oblivious->blackbook($blackbookdata) );
 });

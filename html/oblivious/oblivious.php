@@ -39,7 +39,8 @@
 		        	</div>
 		        </div>
 		        <div class="grd-row my1">
-		          <div rv-each-entry="oblivious_data.entries" class="grd-row-col-1-4 listed-entry py1 my1 mx1 px1">
+		          <div rv-each-entry="oblivious_data.entries" class="grd-row-col-1-4 listed-entry py1 my1 mx1 px1" >
+		            <div rv-class="entry.category">
 		            <div class="heading">
 					        <span class="title">{entry.entryid}</span>
 					</div>
@@ -60,6 +61,7 @@
                     				 	<a rv-eid="entry.entryid" class="oblivious-entry-button btn btn--s btn--green floated-right full-width">View</a>
                     		
 									</div>
+					</div>
 		          </div>
 		        </div>
 		      </div>
@@ -73,7 +75,7 @@
                 	
                 	<a id="return-to-entries" class="category-btn btn btn--s full-width">Back to Entries</a>
                     <div class="oblivious-view-entry">
-                    	<div rv-each-entry="oblivious_viewentry_data.entries" class="">
+                    	<div rv-each-entry="oblivious_viewentry_data.entries"  class="">
                     		<h6 class="">{entry.category}:{entry.entryid}</h6>
                     		
                     		<hr />
