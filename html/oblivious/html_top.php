@@ -46,9 +46,10 @@
                 <h1 class="title">oblivious<?php echo $nav_breadcrumb;?></h1>
                 <nav>
                 <ul>
-	                <li><a href="<?php echo $nav_path;?>"><img src="<?php echo $path_from_index;?>flaticon/svg/house158.svg"/></a></li>
-	                <li><a href="<?php echo $nav_path;?>view/add/"><img src="<?php echo $path_from_index;?>flaticon/svg/add20.svg"/></a></li>
-	                <li><a href="<?php echo $nav_path;?>view/settings/"><img src="<?php echo $path_from_index;?>flaticon/svg/three115.svg"/></a></li>
+	                <li><a href="#loadmodal"><img src="<?php echo $path_from_index;?>flaticon/svg/feed3.svg"/></a></li>
+   	                <li><a id="loadblackbook-button"  ><img src="<?php echo $path_from_index;?>flaticon/svg/visualization.svg"/></a></li>
+	                <li><a href="#addmodal"><img src="<?php echo $path_from_index;?>flaticon/svg/add20.svg"/></a></li>
+	                <li><a href="#settings"><img src="<?php echo $path_from_index;?>flaticon/svg/three115.svg"/></a></li>
 	            </ul>
                 </nav>
             </header>

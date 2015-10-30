@@ -34,11 +34,7 @@ $( document ).ready(function() {
 			});
 		});
 	});
-	$("#clear-blackbook-button").on("click",function(){
-		
-			oblivious.blackbookClear();
-		
-	});
+
 	$("#remove-category-button").on("click",function(){
 		var cat = $("#current-category").val();
 		if(cat == '(choose a category)'){

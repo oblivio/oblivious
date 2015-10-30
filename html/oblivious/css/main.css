@@ -1,3 +1,22 @@
+.half-width{
+	width:50%;
+}
+.listed-entry{
+	background-color:white;
+	background:white;
+	border:1px solid black;
+	    -webkit-box-shadow: 0 5px 10px #aaa;
+    -moz-box-shadow: 0 5px 10px #aaa;
+    box-shadow: 0 5px 10px #aaa;
+}
+#invite-action{
+	width:100%;
+}
+nav{
+position: fixed;
+bottom: 0;
+right: 0;
+}
 #invite-image>img{
 	display:none;
 	width:50%;
@@ -75,9 +94,7 @@ font-weight: bold;
 				z-index:9;
     		}
     		
-    		#submit-entry-button{
-    			height:5em;
-    		}
+    		
 label.clientsidecrypto, input.clientsidecrypto{
 	float:right;
 	width:auto;
@@ -139,12 +156,36 @@ height: 9rem;
 padding-left: 1rem;
 padding-top: 0.5rem;
 padding-right: 1rem;
+margin-bottom:1.5rem;
+margin-right:1%;
+width:49%;
+float:right;
+   }
+   .floated-right{
+   	float:right;
+   }
+   .listed-entry span.title{
+   	margin-bottom:1em;
+   	width:100%;
+   }
+   .instructions-image{
+   		width:3rem;
+   		height:auto;
+   }
+   #instructions{
+   	width:100%;
+   	padding-bottom:5rem;
+   }
+   #oblivious_entrylist,#oblivious_viewentry{
+   	padding-bottom:5rem;
+   }
+   #instructions p{
+   	margin-top:1em;
+   	border-top:1px solid black;
+   	padding-top:0.5em;
    }
 .oblivious-entry-button{
-margin-bottom: 1em;
- -moz-box-shadow:    inset 0 0 10px #000000;
-   -webkit-box-shadow: inset 0 0 10px #000000;
-   box-shadow:         inset 0 0 10px #000000;
+
 }
 .oblivious-entry:hover{
 	cursor:pointer;
@@ -306,8 +347,8 @@ nav ul {
     list-style-type: none;
 }
 .icon-holder{
-	float:right;
-}
+
+	}
 .icon-holder img{
 	width:30px;
 	max-width:30px;
@@ -318,7 +359,7 @@ nav a {
     display: block;
     margin-bottom: 10px;
     padding:0;
-	width:33%;
+	width:25%;
 	border-right:2px solid white;
 	float:left;
 	margin-top:1em;
@@ -350,7 +391,6 @@ nav a:hover {
    ============== */
 
 .main {
-    padding: 30px 0;
     min-height:420px;
 }
 
@@ -429,7 +469,10 @@ nav a:hover {
 }
 
 @media only screen and (min-width: 768px) {
-
+#instructions{
+   	width:50%;
+   	margin: 0 auto;
+   }
 /* ====================
     WIDE: CSS3 Effects
    ==================== */
@@ -486,6 +529,16 @@ letter-spacing:3px;
         width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
     }
+    
+}
+@media only screen and (min-width:0px) and (max-width: 620px) {
+
+/* ===============
+    Mobile
+   =============== */
+	.listed-entry{
+		width:100%;
+	}
 }
 
 /* ==========================================================================

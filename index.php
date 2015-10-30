@@ -27,7 +27,7 @@ $app->configureMode('development', function () use ($app,$oblivious) {
 
 //We can inject the $app variable into the callback function with the use keyword:
 $app->get('/', function () use ($app,$oblivious) {
-	$view_data = array( 'js_path'=>'/code/oblivious/html/oblivious/js/home.js', 'nav_breadcrumb'=>'', 'path_from_index' => '/code/oblivious/html/oblivious/','nav_path'=>'/code/oblivious/');
+	$view_data = array( 'js_path'=>'/code/oblivious/html/oblivious/js/all.js', 'nav_breadcrumb'=>'', 'path_from_index' => '/code/oblivious/html/oblivious/','nav_path'=>'/code/oblivious/');
 	$app->render('html_top.php', $view_data);
 	
 	$app->render('oblivious.php', $view_data);
