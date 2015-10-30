@@ -323,22 +323,28 @@ var oblivious = (function () {
 		    if(encrypted){
 		    	//store it in the blackbook
 		    	//blackbookSet('data_type','key','val');
-		    	blackbookSet('entries',data.category,data.id);
-		    	blackbookSet('keys',data.id,ranKey);
-		    	blackbookSet('categories',data.id,data.category)
-		    	blackbookSet('tokens',data.id,data.deletetoken);
-		    	blackbookSet('meta',data.id,entrydata);
-		    	blackbookSet('commentcount',data.id,1);
+		    	if(entrydata.isinvite){
+		    		
+		    	}else{
+		    		console.log('data',data.length);
+			    	blackbookSet('entries',data.category,data.id);
+			    	blackbookSet('keys',data.id,ranKey);
+			    	blackbookSet('categories',data.id,data.category)
+			    	blackbookSet('tokens',data.id,data.deletetoken);
+			    	blackbookSet('meta',data.id,entrydata);
+			    	blackbookSet('commentcount',data.id+":"+data.category,1);
+		    	}
 		    }
 		    else if(entrydata.isinvite){
 		    	
 		    }else{
+		    	console.log('data',data.length);
 		    	blackbookSet('entries',data.category,data.id);
 		    	blackbookSet('keys',data.id,false);
 		    	blackbookSet('categories',data.id,data.category)
 		    	blackbookSet('tokens',data.id,data.deletetoken);
 		    	blackbookSet('meta',data.id,entrydata);
-		    	blackbookSet('commentcount',data.id,1);
+		    	blackbookSet('commentcount',data.id+":"+data.category,1);
 		    }
 		    if(typeof cb !== 'undefined' && typeof cb === 'function')
 		    	cb.call(data);
@@ -804,7 +810,7 @@ var oblivious = (function () {
 	}
 	function _processInvite(selector){
 //		
-		var encodedinvite = $("#encodedinvite").val();
+		var encodedinvite = $("#encodedinvite-input").val();
 		var decodedinvite = window.atob(encodedinvite);
 		var str_parts = decodedinvite.split("#!");
 		var inviteid  = str_parts[0];
@@ -854,6 +860,7 @@ var oblivious = (function () {
 						    	blackbookSet('keys',entryID,entryKey);
 						    	blackbookSet('categories',entryID,entryCategory);
 						    	blackbookSet('meta',entryID,this[0].meta);
+						    	blackbookSet('commentcount',entryID+":"+entryCategory,0);
 						    	//blackbookSet commentcount here
 						    	//and @ create when populating blackbook
 						    	//clicking view from public does not add to bb

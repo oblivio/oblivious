@@ -31,10 +31,9 @@ right: 0;
 	letter-spacing:1.5px;
 	text-align:center;
 	font-size:0.7em;
-	display:none;
 }
 #loadblackbook-button{
-	float:left;
+	cursor: pointer;
 }
 .processed-entry-image{
 	max-width: 100%;

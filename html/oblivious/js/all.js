@@ -74,8 +74,7 @@ $( document ).ready(function() {
 	        	
 				GhostPixels.decode(password,e.target.result).then(function(decodedMessage){
 					
-					$("#encodedinvite").val(decodedMessage);
-					$("#encodedinvite").show();
+					$("#encodedinvite-input").val(decodedMessage);
 					
 	        	});
 	        	
@@ -278,17 +277,19 @@ $('body').on('click','#loadblackbook-button',function(){
 	
 	$('.listed-entry').removeClass('has-changed');
 	$.each(oblivious_data.hasChanged,function(i,tmpObj){
-		
+		console.log('oblivious_data.hasChanged',oblivious_data.hasChanged);
 		$("#"+tmpObj.entryid).parent('.'+tmpObj.category).parent('.listed-entry').addClass('has-changed');
 		//where do I remove this???
 	});
+	oblivious_data.hasChanged = [];
 })
 $('body').on('click','#return-to-entries',function(){
 	oblivious_viewentry_data.password = '';
-	blivious_viewentry_data.category = '';
+	oblivious_viewentry_data.category = '';
 	oblivious_viewentry_data.entries = [];
 	oblivious_viewentry_data._entryid = '';
-	
+	oblivious_viewentry_data.entryid = '';
+		
 		$("#oblivious_entrylist").show();
 		$("#oblivious_viewentry").hide();
 	});
@@ -407,27 +408,38 @@ $('body').on('click','#send-invite-button',function(){
 					'entryid':'',
 					'commentcount':'',
 			};
+			console.log('tmpEntry',tmpEntry);
 			tmpEntry.entryid = obj.key;
 			tmpEntry.category = obj.value.category;
-			
+			console.log('tmpEntry',tmpEntry);
 			$.each(localCommCount,function(j,cObj){
-				if(cObj.key === obj.key){
+				console.log('cObj',cObj);
+				
+				if(cObj.key === obj.key + ":" + obj.value.category){
 					tmpEntry.commentcount = cObj.value;
 					return false;
 				}
 			});
-			if(typeof tmpEntry.category != 'undefined' && tmpEntry.entryid != 'undefined' && tmpEntry.commentcount != ''){
-				Entries.push(tmpEntry);
+			console.log('tmpEntry',tmpEntry);
+			if(typeof tmpEntry.category != 'undefined' && typeof tmpEntry.entryid != 'undefined' && typeof tmpEntry.commentcount != 'undefined'){
+				if(tmpEntry.category != '' && tmpEntry.entryid != '' && tmpEntry.commentcount != ''){
+					console.log('tmpEntry',tmpEntry);
+					Entries.push(tmpEntry);
+				}
 			}
+
+				
 		});
 		if(Entries.length == 0)
 			return false;
-		
+		console.log('Entries',Entries);
 		$.post( "api/blackbook/", {blackbookdata:Entries})
 		  .done(function( data ) {
 		    oblivious_data.hasChanged = [];
 		    	data = JSON.parse(data);
 		    	var currEntries = [];
+		    	var newCommentCount = [];
+		    	
 			    $.each(data,function(i,obj){
 			    		//obj[0] is the entry
 			    	if(obj.length == 0)
@@ -439,9 +451,11 @@ $('body').on('click','#send-invite-button',function(){
 			    					'category':obj[0].category
 			    			};
 			    			oblivious_data.hasChanged.push(tmp);
+			    			console.log('change!',obj[0]);
+			    			newCommentCount[obj[0].entryid + ":" + obj[0].category] = obj[0].commentcount;
+				    		
 			    		}
-			    		console.log('change!',obj[0].entryid);
-			    		currEntries.push(obj[0]);
+			    		currEntries.push(obj[0]);	
 			    });
 			    
 			    //delete obsolete entries from BB
@@ -451,19 +465,20 @@ $('body').on('click','#send-invite-button',function(){
 					var stillExists = currEntries.filter( function(item){return (item.category==obj.value.category && item.entryid==obj.key);} );
 					
 					if(stillExists.length == 0){
-						oblivious.blackbookSet('meta',obj.key,'');
-						oblivious.blackbookSet('entries',obj.key,'');
-						oblivious.blackbookSet('keys',obj.key,'');
-						oblivious.blackbookSet('categories',obj.key,'');
-						oblivious.blackbookSet('tokens',obj.key,'');
-						oblivious.blackbookSet('commentcount',obj.key,-1);
+						oblivious.blackbookSet('commentcount',obj.key+":"+obj.value.category ,-1);
+					}else{
+						if(newCommentCount.length > 0 && typeof newCommentCount[obj.key+":"+obj.value.category] !== 'undefined'){
+							oblivious.blackbookSet('commentcount',obj.key+":"+obj.value.category,newCommentCount[obj.key+":"+obj.value.category]);
+						}else{
+							
+						}
 					}
 				});
 				
 				//if @ blackbook
-				if(oblivious_data.subnav.active == 'Blackbook' && oblivious_viewentry_data.entryid == ''){
+				if(oblivious_data.subnav.active == 'Blackbook' && $("#oblivious_viewentry").css('display') === 'none'){
 					$('#loadblackbook-button').click();
-				}else if(oblivious_viewentry_data._entryid != ''){
+				}else if ($("#oblivious_viewentry").css('display') === 'block'){
 					oblivious.getEntry(oblivious_viewentry_data._entryid,oblivious_viewentry_data.category,function(){
 						console.log('this @ getEntry',this);
 						var data = this;

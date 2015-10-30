@@ -144,7 +144,7 @@
 						<hr />
 							<label for="invite-pwd">Password*:</label>
 							<input id="invite-pwd" type="text" placeholder="(Required)" class="full-width" />
-					      <input type="text" class="full-width" readonly="readonly" id="encodedinvite" placeholder="encodedinvite" />
+					      <input type="text" class="full-width" id="encodedinvite" placeholder="encodedinvite" />
 					      <button id="send-invite-button" class="btn--green full-width">Generate Invite</button>
 					      <hr />
 					      <a id="invite-image" href="" download="invite.png"><img src="" /></a>
@@ -199,7 +199,7 @@
                 
                 	<form id="inviteform" action="#" role="form" class="my2">
                 		<label for="inviteinput">Enter Invite</label>
-                		<input type="text" id="encodedinvite" class="full-width" />
+                		<input type="text" id="encodedinvite-input" class="full-width" />
                 		<div id="invite-action">
                 			
                 		<input id="decode-input" class="" type=file accept="image/*;capture=camera">				      	

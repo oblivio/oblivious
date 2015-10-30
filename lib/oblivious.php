@@ -417,11 +417,6 @@ private function _createCategory($category){
 			ksort($comments); // Sort comments by date, oldest first.
 			$messages = array_merge($messages, $comments);
 		}
-		//$this->CIPHERDATA = json_encode($messages);
-		//$this->CIPHERDATA = htmlspecialchars($this->CIPHERDATA,ENT_NOQUOTES);
-		// If the paste was meant to be read only once, delete it.
-		if (property_exists($paste->meta, 'burnafterreading') && $paste->meta->burnafterreading) $this->_deleteEntry($pasteid,$category);
-		
 		
 		
 		// See if paste has expired.
@@ -437,6 +432,11 @@ private function _createCategory($category){
 			$messages['commentcount'] = $commentcount;
 			return $messages;
 		}
+		//$this->CIPHERDATA = json_encode($messages);
+		//$this->CIPHERDATA = htmlspecialchars($this->CIPHERDATA,ENT_NOQUOTES);
+		// If the paste was meant to be read only once, delete it.
+		if (property_exists($paste->meta, 'burnafterreading') && $paste->meta->burnafterreading) $this->_deleteEntry($pasteid,$category);
+		
 		
 		return $messages;
 	}
