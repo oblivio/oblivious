@@ -438,7 +438,7 @@ $('body').on('click','#send-invite-button',function(){
 		    oblivious_data.hasChanged = [];
 		    	data = JSON.parse(data);
 		    	var currEntries = [];
-		    	var newCommentCount = [];
+		    	var newCommentCount = {};
 		    	
 			    $.each(data,function(i,obj){
 			    		//obj[0] is the entry
@@ -463,11 +463,13 @@ $('body').on('click','#send-invite-button',function(){
 			    var newMeta = [];
 				$.each(localMeta,function(i,obj){
 					var stillExists = currEntries.filter( function(item){return (item.category==obj.value.category && item.entryid==obj.key);} );
-					
+					console.log(stillExists);
 					if(stillExists.length == 0){
 						oblivious.blackbookSet('commentcount',obj.key+":"+obj.value.category ,-1);
 					}else{
-						if(newCommentCount.length > 0 && typeof newCommentCount[obj.key+":"+obj.value.category] !== 'undefined'){
+						console.log('newComment',newCommentCount,typeof newCommentCount[obj.key+":"+obj.value.category]);
+						if(typeof newCommentCount[obj.key+":"+obj.value.category] !== 'undefined'){
+							
 							oblivious.blackbookSet('commentcount',obj.key+":"+obj.value.category,newCommentCount[obj.key+":"+obj.value.category]);
 						}else{
 							
