@@ -1,4 +1,12 @@
 <?php
+//force www
+if ((strpos($_SERVER['HTTP_HOST'], 'www.') === false))
+{
+	header('Location: http://www.'.$_SERVER["HTTP_HOST"].'/'.$_SERVER["REQUEST_URI"]);
+	exit();
+}
+
+
 require 'sub_modules/slimphp/Slim/Slim.php';
 require 'lib/oblivious.php';
 error_reporting(E_ALL);
