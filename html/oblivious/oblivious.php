@@ -128,7 +128,7 @@
 					
 					      <form id="addcommentform" action="#" role="form" class="my2">
 					      	<img class="add-image-button" src="<?php echo $path_from_index;?>flaticon/svg/picture56.svg" alt="oblivious entry"> 
-					      	<input id="addimage-input" type=file accept="image/*;capture=camera">				      	
+					      	<input id="addimage-input-comment" type=file accept="image/*;capture=camera">				      	
 					      	<hr /><label for="msg">Message</label>
 					        <textarea 	rv-on-change="" id="comment-text" name="msg" rows="3" placeholder="New comment..."></textarea>
 					        

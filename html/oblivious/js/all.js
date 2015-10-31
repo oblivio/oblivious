@@ -323,7 +323,7 @@ $('body').on('click','#send-invite-button',function(){
 				'img':'',
 			}
 	};
-	oblivious._onchange('addimage-input',function(){
+	oblivious._onchange('addimage-input-comment',function(){
 		var imgData = String(this);
 		commentviewdata.newcomment.img = imgData;
 	});
