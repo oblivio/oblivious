@@ -5,13 +5,15 @@ oblivious 0.0.1 Alpha -
 
 ==== THIS IS ALPHA SOFTWARE - USE AT YOUR OWN RISKS ====
 
-oblivious began while trying to further modularize a fork of ZeroBin I've been working on (Haze - www.hazedaily.com);
+oblivious is essentially a file based content management system with a focus on encryption, security and privacy.
 
-While the purpose of Haze is end-to-end encrypted communication (client-to-client encryption) - oblivious takes care of the back-end process. The oblivious system itself is built in a very simple, easy to understand way. When you create a new entry, all you are doing is creating a file (following a particular folder/naming structure); The contents of the file will be the contents of your entry (but encrypted with a server key); This entry can have certain attributes like expiration time, burnafterreading, and open-discussions(comments). If you are the creator of an entry, you will get a special 'delete token' that let's you remove the entry before its expiration date. 
+
+oblivious began while trying to further modularize a fork of the anonymous pastebin called ZeroBin; 
+
+
+The oblivious system itself is built in a very simple, easy to understand way. When you create a new entry, all you are doing is creating a file (following a particular folder/naming structure); The contents of the file will be the contents of your entry (but encrypted with a server key); This entry can have certain attributes like expiration time, burnafterreading, and open-discussions(comments). If you are the creator of an entry, you will get a special 'delete token' that let's you remove the entry before its expiration date. 
 
 Oblivious also provides a mechanism to 'invite' users into entries, allows users to comment on entries, add images to content or comments, password protect specific content, and even specify expiration times. This feature-set is sure to expand in the future.
-
-Oblivious includes a default front-end, to show how the system could be used to provide end-to-end encryption to its users. The default front-end is basically a different theme for the Haze front-end - and encapsulates a lot of the magic into easy to use javascript API. Here is a live demo of oblivious: http://www.fabian-valle.com/code/oblivious/
 
 The oblivious system is built on the Slim framework - a microframework for PHP.
 
