@@ -711,7 +711,6 @@ public function listEntries($category='',$meta=array()){
 			$oldcount = $entrydata['commentcount'];
 			
 			if($category != ''){
-				$tmp = array();
 				for($i=0; $i<count($processed['Entries']); $i++){
 					$currEntry = $processed['Entries'][$i];
 					if($currEntry['category'] == $category && $currEntry['entryid'] == $entryid){
@@ -721,7 +720,7 @@ public function listEntries($category='',$meta=array()){
 						if($newcount != $oldcount)
 							$hasChanged = true;
 						
-						$tmp[] = array(
+						$tmp = array(
 								'entryid'=>$entryid,
 								'category'=>$category,
 								'commentcount'=>$newcount,
