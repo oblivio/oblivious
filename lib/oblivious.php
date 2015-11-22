@@ -448,7 +448,14 @@ private function _createCategory($category){
 			file_put_contents($catfile,$new_data);
 		}
 		$categories = include($catfile);
-		return array('Categories'=>$categories);
+		$keys = array();
+		foreach($categories as $i=>$cat){
+			$keys[$cat] = array(
+				'category'=> $cat,
+				'key'=> $this->getCategoryPublicKey($cat)	
+			);
+		}
+		return array('Categories'=>$categories, 'Keys'=>$keys);
 	}
 	public function createEntry(){
 		// Read additional meta-information.

@@ -33,40 +33,7 @@ $app->configureMode('development', function () use ($app,$oblivious) {
 	));
 });
 
-//We can inject the $app variable into the callback function with the use keyword:
-$app->get('/', function () use ($app,$oblivious) {
-	$view_data = array( 'js_path'=>'/code/oblivious/html/oblivious/js/all.js', 'nav_breadcrumb'=>'', 'path_from_index' => '/code/oblivious/html/oblivious/','nav_path'=>'/code/oblivious/');
-	$app->render('html_top.php', $view_data);
-	
-	$app->render('oblivious.php', $view_data);
-	$app->render('html_bottom.php', $view_data);
-	
-});
-$app->get('/view/add/', function () use ($app,$oblivious) {
-	$view_data = array( 'js_path'=>'/code/oblivious/html/oblivious/js/add.js', 'nav_breadcrumb'=>':add', 'path_from_index' => '/code/oblivious/html/oblivious/','nav_path'=>'/code/oblivious/');
-	$app->render('html_top.php', $view_data);
-	$app->render('add-entry.php', $view_data);
-	$app->render('html_bottom.php', $view_data);
-	
-});
-$app->get('/view/settings/', function () use ($app,$oblivious) {
-	$view_data =  array( 'js_path'=>'/code/oblivious/html/oblivious/js/settings.js', 'nav_breadcrumb'=>':settings', 'path_from_index' => '/code/oblivious/html/oblivious/','nav_path'=>'/code/oblivious/');
-	$app->render('html_top.php',$view_data);
-	
-	$app->render('settings.php', $view_data);
-	
-	$app->render('html_bottom.php', $view_data);
-	
-});
-	$app->get('/view/settings/admin/', function () use ($app,$oblivious) {
-		$view_data =  array( 'js_path'=>'/code/oblivious/html/oblivious/js/settings.js', 'nav_breadcrumb'=>':settings', 'path_from_index' => '/code/oblivious/html/oblivious/','nav_path'=>'/code/oblivious/');
-		$app->render('html_top.php',$view_data);
-	
-		$app->render('settings-admin.php', $view_data);
-	
-		$app->render('html_bottom.php', $view_data);
-	
-	});
+
 $app->post('/api/create/entry/',function() use ($app,$oblivious){
 	if(ISSET($_POST['data'])){
 		header('Content-Type: application/json');
