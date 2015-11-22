@@ -13,7 +13,7 @@ oblivious began while trying to further modularize a fork of the anonymous paste
 
 The oblivious system itself is built in a very simple, easy to understand way. When you create a new entry, all you are doing is creating a file (following a particular folder/naming structure); The contents of the file will be the contents of your entry (but encrypted with a server key); This entry can have certain attributes like expiration time, burnafterreading, and open-discussions(comments). If you are the creator of an entry, you will get a special 'delete token' that let's you remove the entry before its expiration date. 
 
-Oblivious also provides a mechanism to 'invite' users into entries, allows users to comment on entries, add images to content or comments, password protect specific content, and even specify expiration times. This feature-set is sure to expand in the future.
+oblivious also provides a mechanism to 'invite' users into entries, allows users to comment on entries, add images to content or comments, password protect specific content, and even specify expiration times. This feature-set is sure to expand in the future.
 
 The oblivious system is built on the Slim framework - a microframework for PHP.
 
