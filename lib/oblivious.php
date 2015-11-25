@@ -469,6 +469,10 @@ private function _createCategory($category){
 		}else{
 			$category = '';
 		}
+		$nickname = "(Anonymous)";
+		if(ISSET($this->post['nickname'])){
+			$nickname = $this->post['nickname'];
+		}
 		$data = $this->post['data'];
 		$is_comment = (!empty($this->post['parentid']) && !empty($this->post['pasteid'])); // Is this post a comment ?
 		$response = array();
@@ -526,7 +530,10 @@ private function _createCategory($category){
 		//$dataid = $this->secureRandomString(18);
 		$dataid = substr(hash('md5',$this->secureRandomString(16)),0,16);
 		
+		$meta['nickname'] = $nickname;
+		
 		$storage = array('data'=>$data);
+		
 		if (count($meta)>0) $storage['meta'] = $meta;  // Add meta-information only if necessary.
 		
 		if ($is_comment) // The user posts a comment.
