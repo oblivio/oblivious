@@ -733,9 +733,10 @@ public function listEntries($category='',$meta=array()){
 								'commentcount'=>$newcount,
 								'changed'=>$hasChanged
 						);
+
+						$processed['Blackbook'][] = $tmp;
 					}
 				}
-				$processed['Blackbook'][] = $tmp;
 			}
 		}
 		return $processed['Blackbook'];
