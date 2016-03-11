@@ -64,6 +64,13 @@ $app->post('/api/get/entry/',function() use ($app,$oblivious){
 			echo "Fail";
 		}
 	});
+	$app->get('/api/views/basic',function() use ($app,$oblivious){
+		$result = array(
+				'user_hash'=>hash('md5',$_SERVER['REMOTE_ADDR']),
+				'category_data'=>$oblivious->getCategories()
+				);
+		echo json_encode($result);
+	});
 $app->post('/api/remove/entry/',function() use ($app,$oblivious){
 	if(ISSET($_POST['entry_id']) && ISSET($_POST['delete_token']) && ISSET($_POST['category'])){
 		header('Content-Type: application/json');
