@@ -1,15 +1,15 @@
 <?php
+error_reporting(E_ALL);
 //force www
 if ((strpos($_SERVER['HTTP_HOST'], 'www.') === false))
 {
-	header('Location: http://www.'.$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
-	exit();
+	//header('Location: http://www.'.$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]);
+	//exit();
 }
 
 
 require 'sub_modules/slimphp/Slim/Slim.php';
 require 'lib/oblivious.php';
-error_reporting(E_ALL);
 $oblivious_settings=array(
 		//'app_name'=>'other_app_name',
 		'mode' => 'development',
@@ -23,7 +23,6 @@ $oblivious = new \Oblivious\Oblivious(array($oblivious_settings));
 $app = new \Slim\Slim(array(
     'cookies.encrypt' => true,
 		'mode' => 'development',
-		'templates.path' => './html/oblivious'
 ));
 // Only invoked if mode is "development"
 $app->configureMode('development', function () use ($app,$oblivious) {
@@ -33,10 +32,12 @@ $app->configureMode('development', function () use ($app,$oblivious) {
 	));
 });
 
-
+	
 $app->post('/api/create/entry/',function() use ($app,$oblivious){
 	if(ISSET($_POST['data'])){
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+
 		//header("Access-Control-Allow-Origin: *");
 		echo json_encode( $oblivious->createEntry() );
 	}
@@ -47,6 +48,8 @@ $app->post('/api/create/entry/',function() use ($app,$oblivious){
 $app->post('/api/get/entry/',function() use ($app,$oblivious){
 	if(ISSET($_POST['entry_id']) && ISSET($_POST['category'])){
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+
 // 		header("Access-Control-Allow-Origin: *");
 		echo json_encode( $oblivious->getEntry($_POST['entry_id'], $_POST['category']) );
 	}
@@ -57,6 +60,8 @@ $app->post('/api/get/entry/',function() use ($app,$oblivious){
 	$app->post('/api/get/entry/meta/',function() use ($app,$oblivious){
 		if(ISSET($_POST['entry_id']) && ISSET($_POST['category'])){
 			header('Content-Type: application/json');
+			header("Access-Control-Allow-Origin: *");
+
 // 			header("Access-Control-Allow-Origin: *");
 			echo json_encode( $oblivious->getEntry($_POST['entry_id'], $_POST['category']), true );
 		}
@@ -83,24 +88,32 @@ $app->post('/api/remove/entry/',function() use ($app,$oblivious){
 });
 $app->get('/api/list/categories/',function() use ($app,$oblivious){
 	header('Content-Type: application/json');
+	header("Access-Control-Allow-Origin: *");
+
 // 	header("Access-Control-Allow-Origin: *");
 	echo json_encode( $oblivious->getCategories() );
 	
 });
 $app->get('/api/add/categories/:category/',function($category) use ($app,$oblivious){
 	header('Content-Type: application/json');
+	header("Access-Control-Allow-Origin: *");
+
 // 	header("Access-Control-Allow-Origin: *");
 	echo json_encode( $oblivious->createCategory($category) );
 
 });
 $app->get('/api/remove/categories/:category/',function($category) use ($app,$oblivious){
 	header('Content-Type: application/json');
+	header("Access-Control-Allow-Origin: *");
+
 // 	header("Access-Control-Allow-Origin: *");
 	echo json_encode( $oblivious->removeCategory($category) );
 
 });
 $app->get('/api/list/entries/',function() use ($app,$oblivious){
 	header('Content-Type: application/json');
+	header("Access-Control-Allow-Origin: *");
+
 // 	header("Access-Control-Allow-Origin: *");
 	echo json_encode( $oblivious->listEntries() ); //json_encode
 	
@@ -109,22 +122,24 @@ $app->post('/api/blackbook/',function() use ($app,$oblivious){
 	//$blackbookdata = array(array('entryid'=>'', 'category'=>'beta','commentcount'=>1),'377089e832c66dd6'=>array('category'=>'beta','commentcount'=>5)) ;
 	if(ISSET($_POST['blackbookdata'])){
 		$blackbookdata = $_POST['blackbookdata'];
+		header("Access-Control-Allow-Origin: *");
+		header('Content-Type: application/json');
+		echo json_encode( $oblivious->blackbook($blackbookdata) );
+	}else{
+		header("Access-Control-Allow-Origin: *");
 	}
-	header('Content-Type: application/json');
-// 	header("Access-Control-Allow-Origin: *");
-	echo json_encode( $oblivious->blackbook($blackbookdata) );
 });
 $app->post('/api/list/entries/:category/meta/',function($category) use ($app,$oblivious){
 	if(ISSET($_POST['metadata'])){
 		$meta = json_decode($_POST['metadata'],true);
 		if(count($meta) > 0){
 			header('Content-Type: application/json');
-// 			header("Access-Control-Allow-Origin: *");
+			header("Access-Control-Allow-Origin: *");
 			echo json_encode( $oblivious->listEntries($category, $meta )); //json_encode
 		}
 	}else{
 		header('Content-Type: application/json');
-// 		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Origin: *");
 		echo json_encode( array('Error'=>'No metadata passed.') );		
 	}
 });
@@ -133,26 +148,26 @@ $app->post('/api/list/entries/meta/',function() use ($app,$oblivious){
 		$meta = json_decode($_POST['metadata'],true);
 		if(count($meta) > 0){
 			header('Content-Type: application/json');
-// 			header("Access-Control-Allow-Origin: *");
+			header("Access-Control-Allow-Origin: *");
 			echo json_encode( $oblivious->listEntries('', $meta )); //json_encode
 		}
 	}else{
 		header('Content-Type: application/json');
-// 		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Origin: *");
 		echo json_encode( array('Error'=>'No metadata passed.') );
 	}
 });
 
 $app->get('/api/list/entries/:category/',function($category) use ($app,$oblivious){
 	header('Content-Type: application/json');
-// 	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Origin: *");
 	echo json_encode( $oblivious->listEntries($category) ); //json_encode
 
 });
 $app->get('/api/get/publickeys/:category/',function($category) use ($app,$oblivious){
 	$res = $oblivious->getCategoryPublicKey($category); //json_encode
 	header('Content-Type: application/json');
-// 	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Origin: *");
 	echo json_encode( array('Key'=>$res) );
 });
 $app->run();

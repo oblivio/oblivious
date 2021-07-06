@@ -151,14 +151,14 @@ private function _createCategory($category){
 	private function prepareCrypto(){
 		$base_path = realpath( dirname(__FILE__).'/../data/oblivious/' );
 		$catfile = $base_path.'/categories.php';
-		$categories = include $catfile;
-		//file_put_contents('config.php', '<?php return ' . var_export($config, true) . ';');
-		
-		foreach($categories as $i=>$category){
-			$this->_createCategory($category);
+		if (is_file($catfile)){
+			$categories = include $catfile;
+			foreach($categories as $i=>$category){
+				$this->_createCategory($category);
+			}
+			$this->_createInviteCategory();
+			
 		}
-		$this->_createInviteCategory();
-		
 	}
 	private function prepareServerSalt(){
 		//Will require 'WRITE' Permissions

@@ -5,6 +5,13 @@ oblivious 0.0.1 Alpha -
 
 ==== THIS IS ALPHA SOFTWARE - USE AT YOUR OWN RISKS ====
 
+2021 UPDATE: Bringing this thing back from the dead. Here is how to get started quickly.
+
+1. docker build . -t oblivious
+2. docker run -p 80:80 oblivious
+3. http://localhost/api/add/categories/public 
+4. Here you can list the categories. http://localhost/api/list/categories/
+
 oblivious is essentially a file based content management system with a focus on encryption, security and privacy.
 
 

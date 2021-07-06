@@ -2,9 +2,8 @@
 data/
 tmp/
 # Ignore for safety
-.htaccess
 .htpasswd
-
+.DS_Store
 test.php
 
 application/cache/*
